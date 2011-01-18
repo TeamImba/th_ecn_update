@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @ecnreview_form.user_id %>
+</p>
+
+<p>
+  <b>Ecn:</b>
+  <%= @ecnreview_form.ecn_id %>
+</p>
+
+<p>
+  <b>Approval timestamp:</b>
+  <%= @ecnreview_form.approval_timestamp %>
+</p>
+
+<p>
+  <b>Review:</b>
+  <%= @ecnreview_form.review %>
+</p>
+
+<p>
+  <b>Pos:</b>
+  <%= @ecnreview_form.pos_id %>
+</p>
+
+<p>
+  <b>Rem:</b>
+  <%= @ecnreview_form.rem %>
+</p>
+
+
+<%= link_to 'Edit', edit_ecnreview_form_path(@ecnreview_form) %> |
+<%= link_to 'Back', ecnreview_forms_path %>

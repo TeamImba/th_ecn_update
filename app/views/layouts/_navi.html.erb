@@ -1,0 +1,64 @@
+<div style="float:left;width:100%">
+<div style="width:130px;float:left"><img src="/images/thlogo.gif"></div>
+<div style="width:49%;float:left;"><br><br><p class="banner">TONG HSING ELECTRONICS (PHILS.), INC.</p><br></div> 
+<div style="width:36%;float:right;right:1;align:right;"><img src="/images/right_banner.jpg"></div>
+</div>
+<div style="float:right;right:1;align:right;width:100%">
+	<div style="width:50%;float:left"><br>
+  <% if @admin %>
+	Welcome, <b><%=@admin.first_name%></b>
+  <% else %>
+	Welcome, <b><%=@user.first_name%></b>
+  <% end %>
+	</div>
+	<% if @user && @user.pos_id == ORIGINATOR_ACCESS %>
+	<div style="width:32%;float:right;right:1;align:right;">
+	<% else %>
+	<div style="width:22%;float:right;right:1;align:right;">
+	<% end %>
+	<table border="0">
+  <% if @admin %>
+	<tr align="center">
+    <td><%=link_to image_tag("/images/home.jpg"), admin_path %></td>
+    <td><%=link_to image_tag("/images/user_icon.jpg"), ecnusers_path %></td>
+    <td><%=link_to image_tag("/images/add.png"), customer_infos_path %></td>
+    <td><%=link_to image_tag("/images/off.jpg"), admin_logout_path %></td>
+  </tr>
+  <tr align="center">
+		<td class="tdhead">Home</td>
+		<td class="tdhead">User Admin</td>
+    <td class="tdhead">&nbsp;&nbsp;Customer ID/TH PN&nbsp;&nbsp;</td>
+		<td class="tdhead">Logout</td>	
+	</tr>
+  <% else %>  
+	<tr align="center">
+    <td><%=link_to image_tag("/images/home.jpg"), root_path %></td>
+    <td><%=link_to image_tag("/images/user_icon.jpg"), edit_profile_ecnuser_path(@user.id) %></td>
+		<% if @user && @user.pos_id == ORIGINATOR_ACCESS %>
+			<td><a href="/ecndocuments/new"><img src="/images/new.jpg" alt="new" width="45px"></a></td>
+		<% end %>
+		<% if @user && @user.pos_id != 9 %>
+		<td><a href="/ecndocuments/search"><img src="/images/find.jpg" width="45px"></a></td>
+		<% end %>
+		<td><a href="http://apps.tonghsing.ph/ecn/"><img src="/images/chart.jpg" width="45px"></a></td>
+		<td><a href="/logout"><img src="/images/off.jpg" width="45px"></a></td>
+	</tr>
+  <tr align="center">
+		<td class="tdhead">Home</td>
+		<td class="tdhead">Profile</td>
+		<% if @user && @user.pos_id == ORIGINATOR_ACCESS %>		
+		<td class="tdhead">&nbsp;&nbsp;New ECN Doc&nbsp;&nbsp;</td>
+		<% end %>
+		<% if @user && @user.pos_id != 9 %>
+		<td class="tdhead">&nbsp;&nbsp;Find ECN Doc&nbsp;&nbsp;</td>
+		<% end %>
+		<td class="tdhead" align="center">Status Report</td>
+		<td class="tdhead">Logout</td>	
+	</tr>
+  <% end %>
+	
+	</table>
+	</div>
+</div>
+<div style="clear:both;"></div>
+<hr>

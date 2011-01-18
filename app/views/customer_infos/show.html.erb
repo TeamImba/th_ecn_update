@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Cust:</b>
+  <%= @customer_info.cust_id %>
+</p>
+
+<p>
+  <b>Th pn:</b>
+  <%= @customer_info.th_pn %>
+</p>
+
+
+<%= link_to 'Edit', edit_customer_info_path(@customer_info) %> |
+<%= link_to 'Back', customer_infos_path %>

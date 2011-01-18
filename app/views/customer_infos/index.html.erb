@@ -1,0 +1,26 @@
+<h1>Customers</h1>
+
+<%= link_to "New Customer info", new_customer_info_path %>
+
+<table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="#000000" class="myTable">
+  <tr>
+    <th class="table_head">Cust</th>
+    <th class="table_head">TH P.N.</th>
+    <th class="table_head" colspan="3"></th>
+  </tr>
+
+<% @customer_infos.each do |customer_info| %>
+  <tr>
+    <td><%= customer_info.cust_id %></td>
+    <td><%= customer_info.th_pn %></td>
+    <td><%= link_to "Show", customer_info %></td>
+    <td><%= link_to "Edit", edit_customer_info_path(customer_info) %></td>
+    <td><%= link_to "Destroy", customer_info, :confirm => "Are you sure?", :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br/>
+<div style="text-align:center">
+<%= will_paginate @ecnpositions %>
+</div>

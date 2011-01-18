@@ -1,0 +1,41 @@
+<%= form_for(@ecnreview_form) do |f| %>
+  <% if @ecnreview_form.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ecnreview_form.errors.count, "error") %> prohibited this ecnreview_form from being saved:</h2>
+
+      <ul>
+      <% @ecnreview_form.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :ecn_id %><br />
+    <%= f.text_field :ecn_id %>
+  </div>
+  <div class="field">
+    <%= f.label :approval_timestamp %><br />
+    <%= f.datetime_select :approval_timestamp %>
+  </div>
+  <div class="field">
+    <%= f.label :review %><br />
+    <%= f.text_area :review %>
+  </div>
+  <div class="field">
+    <%= f.label :pos_id %><br />
+    <%= f.text_field :pos_id %>
+  </div>
+  <div class="field">
+    <%= f.label :rem %><br />
+    <%= f.text_area :rem %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

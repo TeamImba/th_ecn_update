@@ -1,0 +1,21 @@
+<%= form_for(@ecnposition) do |f| %>
+  <% if @ecnposition.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ecnposition.errors.count, "error") %> prohibited this ecnposition from being saved:</h2>
+
+      <ul>
+      <% @ecnposition.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :position_name %><br />
+    <%= f.text_field :position_name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

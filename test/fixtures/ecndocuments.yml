@@ -1,0 +1,41 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  customer_name: MyString
+  th_part_no: MyString
+  ref_spec: MyString
+  extension: 1
+  description_to: MyText
+  description_from: MyText
+  reason: MyText
+  revision1: MyString
+  action: MyString
+  effectivity_from: 2011-01-15
+  effectivity_to: 2011-01-15
+  user_id: 1
+  ecn_doc: MyString
+  revision2: MyString
+  user_designation: 1
+  closed_timestamps: 2011-01-15 14:53:41
+  obsoletion: 1
+
+two:
+  title: MyString
+  customer_name: MyString
+  th_part_no: MyString
+  ref_spec: MyString
+  extension: 1
+  description_to: MyText
+  description_from: MyText
+  reason: MyText
+  revision1: MyString
+  action: MyString
+  effectivity_from: 2011-01-15
+  effectivity_to: 2011-01-15
+  user_id: 1
+  ecn_doc: MyString
+  revision2: MyString
+  user_designation: 1
+  closed_timestamps: 2011-01-15 14:53:41
+  obsoletion: 1

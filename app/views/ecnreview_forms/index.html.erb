@@ -1,0 +1,33 @@
+<h1>Listing ecnreview_forms</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Ecn</th>
+    <th>Approval timestamp</th>
+    <th>Review</th>
+    <th>Pos</th>
+    <th>Rem</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ecnreview_forms.each do |ecnreview_form| %>
+  <tr>
+    <td><%= ecnreview_form.user_id %></td>
+    <td><%= ecnreview_form.ecn_id %></td>
+    <td><%= ecnreview_form.approval_timestamp %></td>
+    <td><%= ecnreview_form.review %></td>
+    <td><%= ecnreview_form.pos_id %></td>
+    <td><%= ecnreview_form.rem %></td>
+    <td><%= link_to 'Show', ecnreview_form %></td>
+    <td><%= link_to 'Edit', edit_ecnreview_form_path(ecnreview_form) %></td>
+    <td><%= link_to 'Destroy', ecnreview_form, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Ecnreview form', new_ecnreview_form_path %>

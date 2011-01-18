@@ -1,0 +1,54 @@
+<%= form_for(@ecnuser, :html => { :multipart => true }) do |f| %>
+  <% if @ecnuser.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ecnuser.errors.count, "error") %> prohibited this ecnuser from being saved:</h2>
+
+      <ul>
+      <% @ecnuser.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pos_id, "Position" %><br />
+    <%= f.select :pos_id, Ecnposition.all.map{|v| [v.position_name, v.id]}, :selected => @ecnuser.pos_id %>
+  </div>
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
+  </div>
+   <div class="field">
+    <%= f.label :email %><br />
+    <% if params[:action] == "edit" %>
+    <%= f.text_field :email, :disabled => true  %>
+    <% else %>
+    <%= f.text_field :email %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div class="field">
+    <%= f.label :signature, "Upload Signature" %><br />
+    <%= f.file_field :signature %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,23 @@
+<h1>ECN Position</h1>
+<%= link_to "New ECN Position", new_ecnposition_path %>
+
+<table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="#000000" class="myTable">
+  <tr>
+    <th class="table_head">Position</th>
+    <th class="table_head" colspan="3"></th>
+  </tr>
+
+<% @ecnpositions.each do |ecnposition| %>
+  <tr>
+    <td><%= ecnposition.position_name %></td>
+    <td><%= link_to "Edit", edit_ecnposition_path(ecnposition) %></td>
+    <td><%= link_to "Delete", ecnposition, :confirm => "Are you sure?", :method => :delete, :class => "red" %></td>
+  </tr>
+<% end %>
+</table>
+<br/>
+<div style="text-align:center">
+<%= will_paginate @ecnpositions %>
+</div>
+
+

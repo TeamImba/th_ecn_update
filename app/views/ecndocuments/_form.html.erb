@@ -1,0 +1,89 @@
+<%= form_for(@ecndocument) do |f| %>
+  <% if @ecndocument.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ecndocument.errors.count, "error") %> prohibited this ecndocument from being saved:</h2>
+
+      <ul>
+      <% @ecndocument.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :customer_name %><br />
+    <%= f.text_field :customer_name %>
+  </div>
+  <div class="field">
+    <%= f.label :th_part_no %><br />
+    <%= f.text_field :th_part_no %>
+  </div>
+  <div class="field">
+    <%= f.label :ref_spec %><br />
+    <%= f.text_field :ref_spec %>
+  </div>
+  <div class="field">
+    <%= f.label :extension %><br />
+    <%= f.text_field :extension %>
+  </div>
+  <div class="field">
+    <%= f.label :description_to %><br />
+    <%= f.text_area :description_to %>
+  </div>
+  <div class="field">
+    <%= f.label :description_from %><br />
+    <%= f.text_area :description_from %>
+  </div>
+  <div class="field">
+    <%= f.label :reason %><br />
+    <%= f.text_area :reason %>
+  </div>
+  <div class="field">
+    <%= f.label :revision1 %><br />
+    <%= f.text_field :revision1 %>
+  </div>
+  <div class="field">
+    <%= f.label :action %><br />
+    <%= f.text_field :action %>
+  </div>
+  <div class="field">
+    <%= f.label :effectivity_from %><br />
+    <%= f.date_select :effectivity_from %>
+  </div>
+  <div class="field">
+    <%= f.label :effectivity_to %><br />
+    <%= f.date_select :effectivity_to %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :ecn_doc %><br />
+    <%= f.text_field :ecn_doc %>
+  </div>
+  <div class="field">
+    <%= f.label :revision2 %><br />
+    <%= f.text_field :revision2 %>
+  </div>
+  <div class="field">
+    <%= f.label :user_designation %><br />
+    <%= f.text_field :user_designation %>
+  </div>
+  <div class="field">
+    <%= f.label :closed_timestamp %><br />
+    <%= f.datetime_select :closed_timestamp %>
+  </div>
+  <div class="field">
+    <%= f.label :obsoletion %><br />
+    <%= f.text_field :obsoletion %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

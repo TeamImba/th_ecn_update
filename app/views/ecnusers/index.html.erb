@@ -1,0 +1,33 @@
+<h1>ECN Users</h1>
+
+<%= link_to "New User", new_ecnuser_path %>
+
+<table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="#000000" class="myTable">
+  <tr>
+    <th class="table_head">First Name</th>
+    <th class="table_head">Last Name</th>
+    <th class="table_head">Position</th>
+    <th class="table_head">Username</th>
+    <th class="table_head">Email</th>
+    <th class="table_head" colspan="3"></th>
+  </tr>
+  
+<% @ecnusers.each do |ecnuser| %>
+  <tr>
+    <td><%=ecnuser.first_name%>&nbsp;</td>
+    <td><%=ecnuser.last_name %>&nbsp;</td>
+    <td><%=ecnuser.ecnposition.position_name %>&nbsp;</td>
+    <td><%=ecnuser.username %>&nbsp;</td>
+    <td><%=ecnuser.email %>&nbsp;</td>
+    <td><%= link_to "Show", ecnuser %></td>
+    <td><%= link_to "Edit", edit_ecnuser_path(ecnuser) %></td>	
+    <td><%= link_to "Delete", ecnuser, :confirm => "Are you sure?", :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br/>
+<div style="text-align:center">
+<%= will_paginate @ecnpositions %>
+</div>
+

@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user_id: 1
+  ecn_id: 1
+  approval_timestamp: 2011-01-15 14:43:33
+  status: 1
+  pos_id: 1
+
+two:
+  user_id: 1
+  ecn_id: 1
+  approval_timestamp: 2011-01-15 14:43:33
+  status: 1
+  pos_id: 1

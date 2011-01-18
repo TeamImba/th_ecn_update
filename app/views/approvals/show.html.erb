@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @approval.user_id %>
+</p>
+
+<p>
+  <b>Ecn:</b>
+  <%= @approval.ecn_id %>
+</p>
+
+<p>
+  <b>Approval timestamp:</b>
+  <%= @approval.approval_timestamp %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @approval.status %>
+</p>
+
+<p>
+  <b>Pos:</b>
+  <%= @approval.pos_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_approval_path(@approval) %> |
+<%= link_to 'Back', approvals_path %>

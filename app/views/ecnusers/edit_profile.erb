@@ -1,0 +1,52 @@
+<h1>Update Profile</h1>
+
+<%= form_for(@ecnuser, :url => update_profile_ecnuser_path(@ecnuser), :html => { :multipart => true }) do |f| %>
+  <% if @ecnuser.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ecnuser.errors.count, "error") %> prohibited this ecnuser from being saved:</h2>
+
+      <ul>
+      <% @ecnuser.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+ 
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email, :disabled => true  %>
+  </div>
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username, :disabled => true %>
+  </div>
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div class="field">
+    <%= f.label :signature, "Upload Signature" %><br />
+    <%= f.file_field :signature %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+<%= link_to 'Cancel', root_path %>

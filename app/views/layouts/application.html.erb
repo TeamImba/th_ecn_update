@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= "TONGHSING Electronics Philippines Inc." if @pagetitle.nil? || @pagetitle.blank? %><%= @pagetitle%></title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+  <style type="text/css">
+    .red { 
+      color: red; 
+    }
+    .actions{
+      float:left;
+    }
+    
+    .myTable {
+      width:100%;
+    }
+    .myTable tr:hover td{
+      background-color: lightgray;
+    }
+    
+    body { font-family: Arial; }
+    td { vertical-align: top; }
+    img { border-style:none; }
+    a:hover { text-decoration:none; }
+    a:link { text-decoration:none; }
+    a:visited { text-decoration:none; }	
+    .table_head { background-color:#0099CC; color:#FFFFFF; }
+    .banner { font-size: 20px; color:#003399; font-weight:bold;}	
+    .tdhead { font-size: 12px; }
+  
+  
+  </style>
+</head>
+<body>
+<%=render :partial => "layouts/navi" %>
+
+<%= yield  %>
+
+<%=render :partial => "layouts/footer" %>
+</body>
+</html>
