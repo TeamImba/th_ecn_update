@@ -25,11 +25,7 @@
   </div>
    <div class="field">
     <%= f.label :email %><br />
-    <% if params[:action] == "edit" %>
-    <%= f.text_field :email, :disabled => true  %>
-    <% else %>
     <%= f.text_field :email %>
-    <% end %>
   </div>
   <div class="field">
     <%= f.label :username %><br />

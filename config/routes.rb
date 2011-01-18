@@ -6,7 +6,11 @@ Laguna::Application.routes.draw do
 
   resources :approvals
 
-  resources :customer_infos
+  resources :customer_infos do
+    member do
+      get 'get_th_pn'
+    end
+  end
 
   resources :ecnsignatures
 

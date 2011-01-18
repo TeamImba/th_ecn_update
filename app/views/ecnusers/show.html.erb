@@ -1,8 +1,9 @@
 <div style="float:left; display:inline-block; width:400px;">
-<p><b>First Name</b>: <%=@ecnuser.first_name%></p>
-<p><b>Last Name</b>: <%=@ecnuser.last_name%></p>
-<p><b>Username</b>: <%=@ecnuser.username%></p>
-<p><b>Email</b>: <%=@ecnuser.email%></p>
+<p><b>First Name</b>: <%=@ecnuser.first_name %></p>
+<p><b>Last Name</b>: <%=@ecnuser.last_name %></p>
+<p><b>Position</b>: <%=@ecnuser.ecnposition.position_name %></p>
+<p><b>Username</b>: <%=@ecnuser.username %></p>
+<p><b>Email</b>: <%=@ecnuser.email %></p>
 </div>
 <div>
 <% if @ecnuser.signature.exists? then %>

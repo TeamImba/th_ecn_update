@@ -1,89 +1,60 @@
 <%= form_for(@ecndocument) do |f| %>
-  <% if @ecndocument.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@ecndocument.errors.count, "error") %> prohibited this ecndocument from being saved:</h2>
-
-      <ul>
-      <% @ecndocument.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :customer_name %><br />
-    <%= f.text_field :customer_name %>
-  </div>
-  <div class="field">
-    <%= f.label :th_part_no %><br />
-    <%= f.text_field :th_part_no %>
-  </div>
-  <div class="field">
-    <%= f.label :ref_spec %><br />
-    <%= f.text_field :ref_spec %>
-  </div>
-  <div class="field">
-    <%= f.label :extension %><br />
-    <%= f.text_field :extension %>
-  </div>
-  <div class="field">
-    <%= f.label :description_to %><br />
-    <%= f.text_area :description_to %>
-  </div>
-  <div class="field">
-    <%= f.label :description_from %><br />
-    <%= f.text_area :description_from %>
-  </div>
-  <div class="field">
-    <%= f.label :reason %><br />
-    <%= f.text_area :reason %>
-  </div>
-  <div class="field">
-    <%= f.label :revision1 %><br />
-    <%= f.text_field :revision1 %>
-  </div>
-  <div class="field">
-    <%= f.label :action %><br />
-    <%= f.text_field :action %>
-  </div>
-  <div class="field">
-    <%= f.label :effectivity_from %><br />
-    <%= f.date_select :effectivity_from %>
-  </div>
-  <div class="field">
-    <%= f.label :effectivity_to %><br />
-    <%= f.date_select :effectivity_to %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :ecn_doc %><br />
-    <%= f.text_field :ecn_doc %>
-  </div>
-  <div class="field">
-    <%= f.label :revision2 %><br />
-    <%= f.text_field :revision2 %>
-  </div>
-  <div class="field">
-    <%= f.label :user_designation %><br />
-    <%= f.text_field :user_designation %>
-  </div>
-  <div class="field">
-    <%= f.label :closed_timestamp %><br />
-    <%= f.datetime_select :closed_timestamp %>
-  </div>
-  <div class="field">
-    <%= f.label :obsoletion %><br />
-    <%= f.text_field :obsoletion %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <table width="100%" border="1" bordercolor="#000000" cellpadding="3">
+	<tr>
+		<td align="center" colspan="6" height="110">
+			<table width="100%">
+				<tr>
+					<td width="50px" align="center" valign="middle"><img src="/images/thlogo.gif"></td>
+					<td align="center">
+							<br><h1>ENGINEERING CHANGE NOTICE</h1>
+							<h3>TONG HSING ELECTRONICS (PHILS.) INC.</h3>
+							<h4>Carmelray I Industrial Park Canlubang Calamba City</h4>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+  
+  <tr>
+		<td colspan="5" height="40"><b>Title</b> <br><%= text_field "ecndocument", "title"  %></td>
+		<td><b>ECN #</b> 
+		<% if @user.pos_id == DCC_ACCESS %>		
+			<br><%= f.text_field :ecn_doc %>
+		<% else %>
+			<br>Note: For DCC entry only
+		<% end %>			
+		</td>
+	</tr>
+  
+  
+  <tr>
+		<td height="40"><b>Customer</b><br>
+      <%=f.select "customer_name", options_from_collection_for_select(CustomerInfo.select("unique(cust_id)").order("cust_id asc"), "cust_id", "cust_id")  %>
+		</td>
+		<td colspan="2"><b>TH. P/N.</b><br>
+			<span id="th"></span>
+			<span id="indicator" style="display:none;"><img src="/images/uploading.gif"></span>
+		</td>
+		<td colspan="2"><b>Ref. Specs.</b><br><%#= text_field "ecndocument", "ref_spec"  %></td>
+		<td><b>Extension </b><br>1st <input type="radio" id="ecndocument_extension" name="ecndocument[extension]" value="1" <%#if @ecndocument.extension == 1 %>checked<%#end %> />
+						  2nd <input type="radio" id="ecndocument_extension" name="ecndocument[extension]" value="2" <%# if @ecndocument.extension == 2 %>checked<%# end %> />
+						  None <input type="radio" id="ecndocument_extension" name="ecndocument[extension]" value="0" <%# if @ecndocument.extension == 0 || params[:action] == "new" %>checked<%# end %> />						  
+						  </td>						
+	</tr>
+  </table>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#ecndocument_customer_name").live("change", function(){
+      $("#th").hide();
+      $("#indicator").show();
+      $.get("/customer_infos/" + $(this).val() + "/get_th_pn", function(content) {
+        $("#indicator").hide();
+        $("#th").replaceWith( content ).show();
+      });
+      return false;
+    });
+    
+  });
+</script>

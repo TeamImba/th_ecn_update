@@ -62,6 +62,7 @@ class EcnusersController < ApplicationController
   # GET /ecnusers/1/edit
   def edit
     @ecnuser = Ecnuser.find(params[:id])
+    @ecnuser.password = nil
   end
 
   # POST /ecnusers
