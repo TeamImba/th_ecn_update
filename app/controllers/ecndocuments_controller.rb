@@ -3,7 +3,6 @@ class EcndocumentsController < ApplicationController
   # GET /ecndocuments.xml
   def index
     @ecndocuments = Ecndocument.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @ecndocuments }
@@ -21,11 +20,12 @@ class EcndocumentsController < ApplicationController
     end
   end
 
+
   # GET /ecndocuments/new
   # GET /ecndocuments/new.xml
   def new
     @ecndocument = Ecndocument.new
-
+    init_form
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @ecndocument }
@@ -35,21 +35,22 @@ class EcndocumentsController < ApplicationController
   # GET /ecndocuments/1/edit
   def edit
     @ecndocument = Ecndocument.find(params[:id])
+    init_form
   end
 
   # POST /ecndocuments
   # POST /ecndocuments.xml
   def create
-    @ecndocument = Ecndocument.new(params[:ecndocument])
+    #@ecndocument = Ecndocument.new(params[:ecndocument])
 
     respond_to do |format|
-      if @ecndocument.save
-        format.html { redirect_to(@ecndocument, :notice => 'Ecndocument was successfully created.') }
-        format.xml  { render :xml => @ecndocument, :status => :created, :location => @ecndocument }
-      else
+      #if @ecndocument.save
+      #  format.html { redirect_to(@ecndocument, :notice => 'Ecndocument was successfully created.') }
+      #  format.xml  { render :xml => @ecndocument, :status => :created, :location => @ecndocument }
+      #else
         format.html { render :action => "new" }
         format.xml  { render :xml => @ecndocument.errors, :status => :unprocessable_entity }
-      end
+      #end
     end
   end
 
@@ -80,4 +81,12 @@ class EcndocumentsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+private
+  def init_form
+    # @ecnpositions = Ecnposition.approval_for(@user.pos_id)
+    @ecnpositions = Ecnposition.find([2,3,4,5,6,7,8,9,12])
+  end
+  
+  
 end

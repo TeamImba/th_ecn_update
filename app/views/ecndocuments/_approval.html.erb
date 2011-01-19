@@ -1,0 +1,16 @@
+<% ecnposition ||= approval %>
+<tr>
+    <td colspan="2"><%=ecnposition.position_name%></td>
+    
+    <td>
+      <% if ecnposition.id != DCC_ACCESS %>
+      <%= select_tag "approval[]",  (raw "<option>Select signatory</option>") + options_from_collection_for_select(ecnposition.ecnusers, "id", "full_name"), :style => "width:100%"  %>
+      <% end %>
+      
+      
+      
+    </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>			
+</tr>

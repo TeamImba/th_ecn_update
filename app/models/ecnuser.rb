@@ -1,5 +1,6 @@
 class Ecnuser < ActiveRecord::Base
   require 'digest/md5'
+  has_many :approvals
   belongs_to :ecnposition, :primary_key => :id, :foreign_key => :pos_id
   
   before_save :hash_password
@@ -13,6 +14,10 @@ class Ecnuser < ActiveRecord::Base
   validates :username, :presence => true
   validates :email, :presence => true
   validates :password, :presence => true, :confirmation => true
+  
+  def full_name
+    self.first_name + " " + self.last_name
+  end
   
   def self.authenticate(username="", password="")
     user = self.where("username = :username", {:username => username} ).first
@@ -30,7 +35,7 @@ class Ecnuser < ActiveRecord::Base
   def self.authenticate_admin(username="", password="")
     user = self.where("username = :username", {:username => username} ).first
     if user
-      if user.username != "admin"
+      if user.username != "admin" && user.ecnposition.position_name == "admin"
         ["user is unautorized", user.username]
       elsif user.password != Digest::MD5.hexdigest(password)
         ["password is incorrect", user.username]

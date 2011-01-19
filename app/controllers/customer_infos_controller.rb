@@ -3,7 +3,7 @@ class CustomerInfosController < ApplicationController
   before_filter :authenticate_admin, :except => :get_th_pn
   
   def get_th_pn
-    @thpn = CustomerInfo.where( ["cust_id = ?", params[:id].to_s] )
+    @thpn = CustomerInfo.where( :cust_id => params[:id].to_s )
     render :partial => "get_th_pn"
   end
   

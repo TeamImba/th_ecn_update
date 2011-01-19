@@ -8,7 +8,7 @@ Laguna::Application.initialize!
 
 
 a = Ecnposition.find(:first, :order => "id desc")
-b = Ecnposition.find(:first, :order => "id asc")
+b = Ecnposition.find(:first, :conditions => "id > 0", :order => "id asc")
 
 DCC_ACCESS = a.id.to_i  if a
 ORIGINATOR_ACCESS = b.id.to_i if b

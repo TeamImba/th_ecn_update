@@ -6,7 +6,7 @@
 				<tr>
 					<td width="50px" align="center" valign="middle"><img src="/images/thlogo.gif"></td>
 					<td align="center">
-							<br><h1>ENGINEERING CHANGE NOTICE</h1>
+							<br/><h1>ENGINEERING CHANGE NOTICE</h1>
 							<h3>TONG HSING ELECTRONICS (PHILS.) INC.</h3>
 							<h4>Carmelray I Industrial Park Canlubang Calamba City</h4>
 					</td>
@@ -16,45 +16,122 @@
 	</tr>
   
   <tr>
-		<td colspan="5" height="40"><b>Title</b> <br><%= text_field "ecndocument", "title"  %></td>
+		<td colspan="5" height="40"><b>Title</b> <br/><%= text_field "ecndocument", "title"  %></td>
 		<td><b>ECN #</b> 
 		<% if @user.pos_id == DCC_ACCESS %>		
-			<br><%= f.text_field :ecn_doc %>
+			<br/><%= f.text_field :ecn_doc %>
 		<% else %>
-			<br>Note: For DCC entry only
+			<br/>Note: For DCC entry only
 		<% end %>			
 		</td>
 	</tr>
   
   
   <tr>
-		<td height="40"><b>Customer</b><br>
-      <%=f.select "customer_name", options_from_collection_for_select(CustomerInfo.select("unique(cust_id)").order("cust_id asc"), "cust_id", "cust_id")  %>
+		<td height="40"><b>Customer</b><br/>
+      <%= f.select "customer_name", options_from_collection_for_select(CustomerInfo.select("unique(cust_id)").order("cust_id asc"), "cust_id", "cust_id", @ecndocument.customer_name) %>
 		</td>
-		<td colspan="2"><b>TH. P/N.</b><br>
+		<td colspan="2"><b>TH. P/N.</b><br/>
 			<span id="th"></span>
 			<span id="indicator" style="display:none;"><img src="/images/uploading.gif"></span>
 		</td>
-		<td colspan="2"><b>Ref. Specs.</b><br><%#= text_field "ecndocument", "ref_spec"  %></td>
-		<td><b>Extension </b><br>1st <input type="radio" id="ecndocument_extension" name="ecndocument[extension]" value="1" <%#if @ecndocument.extension == 1 %>checked<%#end %> />
-						  2nd <input type="radio" id="ecndocument_extension" name="ecndocument[extension]" value="2" <%# if @ecndocument.extension == 2 %>checked<%# end %> />
-						  None <input type="radio" id="ecndocument_extension" name="ecndocument[extension]" value="0" <%# if @ecndocument.extension == 0 || params[:action] == "new" %>checked<%# end %> />						  
-						  </td>						
+		<td colspan="2"><b>Ref. Specs.</b><br/><%=f.text_field "ref_spec"  %></td>
+		<td><b>Extension </b><br/>
+        <%= f.radio_button :extension, "1" %>
+        <%= f.label :extension, "1st", :value => "1" %> &nbsp; &nbsp; &nbsp;
+        <%= f.radio_button :extension, "2" %>
+        <%= f.label :extension, "2nd", :value => "2" %>  &nbsp; &nbsp; &nbsp;
+        <%= f.radio_button :extension, "0" %>
+        <%= f.label :extension, "None", :value => "0" %>
+    </td>						
 	</tr>
+  
+  
+  <tr>
+    <td align="center" colspan="6"><b>DESCRIPTION OF CHANGE</b></td>
+  </tr>
+  <tr>
+    <td colspan="3" height="250" width="50%"><b>From</b> <br/><%= f.text_area :description_to, :rows => "20", :cols => "70"  %></td>
+    <td colspan="3" width="50%"><b>To</b> <br/><%= f.text_area :description_from, :rows => "20", :cols => "70"  %></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="6"><b>REASON FOR CHANGE</b></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="6"><br/><%= f.text_area :reason, :rows => "20", :cols => "120"  %></td>
+  </tr>	
+  
+  
+  <tr>
+    <td colspan="2" height="50">
+      <b>Level & Type of Revision</b> <br/>
+      <%= f.radio_button :revision1, "Major" %>
+      <%= f.label :revision1, "Major", :value => "Major", :style => "font-weight:bold" %><br/>
+      <%= f.radio_button :revision1, "Minor" %>
+      <%= f.label :revision1, "Minor", :value => "Minor", :style => "font-weight:bold" %><br/>
+      <hr/>
+      <%= f.radio_button :revision2, "Permanent" %>
+      <%= f.label :revision2, "Permanent", :value => "Permanent", :style => "font-weight:bold" %><br/>
+      <%= f.radio_button :revision2, "Temporary" %>
+      <%= f.label :revision2, "Temporary", :value => "Temporary", :style => "font-weight:bold" %><br/>
+    </td>
+    <td colspan="2">
+      <b>Actions Required</b> <br/>
+      <%= f.select "action", options_for_select([["Operator - Inspector Training", "Operator / Inspector Training"], ["Technical Training", "Technical Training"]], @ecndocument.action )  %>
+    </td>
+    <td colspan="2"><b>Effectivity</b><br/>
+      <% if @user.pos_id == DCC_ACCESS %>
+      <%= date_select "ecndocument", "effectivity_from"  %><br/><%= date_select "ecndocument", "effectivity_to"  %>
+      <% else %>
+      <br/>Note: For DCC entry only
+      <% end %>
+    </td>				
+  </tr>
+  
+  
+  <tr>
+    <td colspan="2"><b>Approvals</b></td>
+    <td><b>Name</b></td>
+    <td><b>Signature</b></td>
+    <td><b>Date</b></td>
+    <td><b>Time</b></td>				
+  </tr>
+  
+  <%= render :partial => "approval", :collection => @ecnpositions %>
+  
+  <tr>
+		<td align="center" colspan="6" height="60"><br><h1>ECN Review Form</h1></td>
+	</tr>
+	<tr>
+		<td width="15%">Department</td>
+		<td>Action, Items, Concerns, Comments, Disposition</td>		
+		<td>Remarks</td>
+		<td>Noted By</td>
+		<td>Date/Time</td>
+		<td>Signature</td>		
+	</tr>
+    
+  <%= render :partial => "review_form", :collection => @departments %>
+  
+  
+  <tr><td colspan="6"><%= submit_tag "Create" %></td></tr>
   </table>
 <% end %>
 
 <script type="text/javascript">
   $(document).ready(function(){
+    
     $("#ecndocument_customer_name").live("change", function(){
       $("#th").hide();
       $("#indicator").show();
       $.get("/customer_infos/" + $(this).val() + "/get_th_pn", function(content) {
         $("#indicator").hide();
-        $("#th").replaceWith( content ).show();
+        $("#th").html( content ).show();
       });
       return false;
     });
+    // this is for EDIT
+    $("#ecndocument_customer_name").trigger("change");
     
   });
 </script>
