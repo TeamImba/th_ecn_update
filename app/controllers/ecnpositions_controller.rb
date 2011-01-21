@@ -2,7 +2,7 @@ class EcnpositionsController < ApplicationController
   # GET /ecnpositions
   # GET /ecnpositions.xml
   def index
-    @ecnpositions = Ecnposition.paginate :page => params[:page], :order => "position_name asc", :per_page => 10
+    @ecnpositions = Ecnposition.paginate :page => params[:page], :order => "id asc", :per_page => 10
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @ecnpositions }

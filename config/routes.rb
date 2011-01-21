@@ -1,5 +1,7 @@
 Laguna::Application.routes.draw do
 
+  resources :doc_categories
+
   resources :ecnreview_forms
 
   resources :ecndocuments

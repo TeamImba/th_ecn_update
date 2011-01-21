@@ -1,0 +1,25 @@
+<h1>Document Categories</h1>
+
+<%= link_to "New Document Category", new_doc_category_path %>
+<br/>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="#000000" class="myTable">
+  <tr>
+    <th class="table_head">Name</th>
+    <th class="table_head">Alias</th>
+    <th class="table_head" colspan="3"></th>
+  </tr>
+
+<% @doc_categories.each do |doc_category| %>
+  <tr>
+    <td><%= doc_category.name %></td>
+    <td><%= doc_category.alias %></td>
+    <td><%= link_to "Show", doc_category %></td>
+    <td><%= link_to "Edit", edit_doc_category_path(doc_category) %></td>
+    <td><%= link_to "Delete", doc_category, :confirm => "Are you sure?", :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br/>
+<%= link_to "New Document Category", new_doc_category_path %>
+

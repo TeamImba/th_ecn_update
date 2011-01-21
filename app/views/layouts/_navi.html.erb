@@ -61,4 +61,13 @@
 	</div>
 </div>
 <div style="clear:both;"></div>
-<hr>
+<div style="width:100%; background-color:darkgray;">
+<div style="margin:20px;">
+<% if @admin %>
+<%= link_to "Home", admin_path, :style => "color:white" %>
+<% else %>
+<%= link_to "Home", root_path, :style => "color:white" %>
+<% end %>
+</div>
+</div>
+<div style="clear:both;"></div>

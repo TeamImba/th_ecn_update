@@ -1,7 +1,7 @@
 <h1>Customers</h1>
 
 <%= link_to "New Customer info", new_customer_info_path %>
-
+<br/>
 <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="#000000" class="myTable">
   <tr>
     <th class="table_head">Cust</th>
@@ -15,11 +15,12 @@
     <td><%= customer_info.th_pn %></td>
     <td><%= link_to "Show", customer_info %></td>
     <td><%= link_to "Edit", edit_customer_info_path(customer_info) %></td>
-    <td><%= link_to "Destroy", customer_info, :confirm => "Are you sure?", :method => :delete %></td>
+    <td><%= link_to "Delete", customer_info, :confirm => "Are you sure?", :method => :delete %></td>
   </tr>
 <% end %>
 </table>
-
+<br/>
+<%= link_to "New Customer info", new_customer_info_path %>
 <br/>
 <div style="text-align:center">
 <%= will_paginate @ecnpositions %>

@@ -1,7 +1,7 @@
 <h1>ECN Users</h1>
 
 <%= link_to "New User", new_ecnuser_path %>
-
+<br/>
 <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="#000000" class="myTable">
   <tr>
     <th class="table_head">First Name</th>
@@ -25,7 +25,8 @@
   </tr>
 <% end %>
 </table>
-
+<br/>
+<%= link_to "New User", new_ecnuser_path %>
 <br/>
 <div style="text-align:center">
 <%= will_paginate @ecnpositions %>

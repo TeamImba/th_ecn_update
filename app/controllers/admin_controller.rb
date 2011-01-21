@@ -10,7 +10,7 @@ class AdminController < ApplicationController
         flash[:error] = message
       end
     elsif session[:admin]
-      render :text => "", :layout => "application"
+      render :action => "menu", :layout => "application"
     end
 	end
   

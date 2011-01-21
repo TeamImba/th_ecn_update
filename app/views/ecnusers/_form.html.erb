@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :pos_id, "Position" %><br />
-    <%= f.select :pos_id, Ecnposition.all.map{|v| [v.position_name, v.id]}, :selected => @ecnuser.pos_id %>
+    <%= f.select :pos_id, Ecnposition.position_for_select, :selected => @ecnuser.pos_id %>
   </div>
   <div class="field">
     <%= f.label :first_name %><br />

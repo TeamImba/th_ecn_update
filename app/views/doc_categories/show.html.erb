@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @doc_category.name %>
+</p>
+
+<p>
+  <b>Alias:</b>
+  <%= @doc_category.alias %>
+</p>
+
+<p>
+For Approval, Action, Items, Concerns, Comments, Disposition
+</p>
+<ol>
+<% for position in @doc_category.ecnpositions %>
+  <li><%=position.position_name%></li>
+<% end %>
+</ol>
+<div style="clear:both"></div>
+<%= link_to "Back", doc_categories_path %>

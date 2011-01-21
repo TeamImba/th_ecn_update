@@ -1,4 +1,4 @@
-<%= form_for(@ecndocument) do |f| %>
+<%= form_for(@ecndocument, :html => {:multipart => true} ) do |f| %>
   <table width="100%" border="1" bordercolor="#000000" cellpadding="3">
 	<tr>
 		<td align="center" colspan="6" height="110">
@@ -6,9 +6,12 @@
 				<tr>
 					<td width="50px" align="center" valign="middle"><img src="/images/thlogo.gif"></td>
 					<td align="center">
-							<br/><h1>ENGINEERING CHANGE NOTICE</h1>
+							<br/><h1><%= @doc_category.name %></h1>
 							<h3>TONG HSING ELECTRONICS (PHILS.) INC.</h3>
 							<h4>Carmelray I Industrial Park Canlubang Calamba City</h4>
+              <%=f.hidden_field :doc_category_id, :value => @doc_category.id %>
+              <%=f.hidden_field :user_id, :value => @user_id %>
+              <%=f.hidden_field :ecn_doc, :value => @doc_category.alias %>
 					</td>
 				</tr>
 			</table>
@@ -96,11 +99,22 @@
     <td><b>Date</b></td>
     <td><b>Time</b></td>				
   </tr>
+  <% count = 0 %>
+  <% f.fields_for :approvals do |g|%>
+      <tr>
+      <td colspan="2"><b><%=@position[count].position_name%></b></td>
+      <td><%=g.select :user_id, (raw "<option value="">Select signatory</option>") + options_from_collection_for_select(@position[count].ecnusers, "id", "full_name"), :style => "width:100%" %> </td>
+      <td><b><%=g.hidden_field :pos_id, :value => @position[count].id %>
+      </b></td>
+      <td><b></b></td>
+      <td><b></b></td>				
+    </tr>
+  <% count += 1 %>
+  <% end %>
   
-  <%= render :partial => "approval", :collection => @ecnpositions %>
   
   <tr>
-		<td align="center" colspan="6" height="60"><br><h1>ECN Review Form</h1></td>
+		<td align="center" colspan="6" height="60"><br><h1><%= @doc_category.alias%> Review Form</h1></td>
 	</tr>
 	<tr>
 		<td width="15%">Department</td>
@@ -110,10 +124,49 @@
 		<td>Date/Time</td>
 		<td>Signature</td>		
 	</tr>
-    
-  <%= render :partial => "review_form", :collection => @departments %>
+  
+  <% count = 0 %>
+  <% f.fields_for :ecnreview_forms do |g| %>
+  <tr>
+    <td><b><%=@position[count].position_name%></b></td>
+    <td></td>
+    <td><b></b></td>
+    <td></td>
+    <td></td>				
+    <td></td>				
+  </tr>
+  <% count += 1 %>
+  <% end %>
   
   
+  <tr><td colspan="6">
+  <ol id="files-root">	
+	<br><b>Attach Files:</b></br>
+	<%= f.fields_for :assets do |asset| %>
+  <% if asset.object.new_record? %>
+    <li><%= asset.file_field :image %></li>
+  <% end %>
+  <% end %>
+  </ol>
+  </td></tr>
+  
+  
+  
+  <script>
+	var gFiles = 0;
+	function addFile() {
+		var li = document.createElement('li');
+		li.setAttribute('id', 'file-' + gFiles);
+		li.innerHTML = '<input type="file" name="file[]" onchange="addFile();"><span onclick="removeFile(\'file-' + gFiles + '\')" style="cursor:pointer;">Remove</span>';
+		document.getElementById('files-root').appendChild(li);
+		gFiles++;
+	}
+	function removeFile(aId) {
+		var obj = document.getElementById(aId);
+		obj.parentNode.removeChild(obj);
+	}
+	</script>
+       
   <tr><td colspan="6"><%= submit_tag "Create" %></td></tr>
   </table>
 <% end %>

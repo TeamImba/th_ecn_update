@@ -1,0 +1,36 @@
+<%= form_for(@doc_category) do |f| %>
+  <% if @doc_category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@doc_category.errors.count, "error") %> prohibited this doc_category from being saved:</h2>
+
+      <ul>
+      <% @doc_category.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :alias %><br />
+    <%= f.text_field :alias %>
+  </div>
+  <ul style="list-style:none">
+  <% for position in @ecnpositions %>
+    <li>
+      <label>
+        <%=check_box_tag "doc_category[ecnposition_ids][]", position.id,  @doc_category.ecnpositions.include?(position)%>
+        <span><%=position.position_name%></span>
+      </label>
+    </li>
+  <% end %>
+  </ul>
+  <div style="clear:both"></div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

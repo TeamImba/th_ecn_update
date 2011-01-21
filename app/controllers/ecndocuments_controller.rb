@@ -25,32 +25,53 @@ class EcndocumentsController < ApplicationController
   # GET /ecndocuments/new.xml
   def new
     @ecndocument = Ecndocument.new
-    init_form
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @ecndocument }
+    @doc_category = DocCategory.find(params[:type])
+    @ecndocument.doc_category = @doc_category
+    @user_id = @user.id
+    @position = []
+    for position in @doc_category.ecnpositions
+      @ecndocument.approvals.build
+      @ecndocument.ecnreview_forms.build
+      @position.push(position)
+    end
+    5.times { @ecndocument.assets.build }
+    
+    if @doc_category
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @ecndocument }
+      end
+    else
+      render :text => "invalid document category type", :layout => "application"
     end
   end
 
   # GET /ecndocuments/1/edit
   def edit
     @ecndocument = Ecndocument.find(params[:id])
-    init_form
+    @doc_category = @ecndocument.doc_category
+    @user_id = @ecndocument.user_id
+    @position = []
+    for position in @doc_category.ecnpositions
+      @ecndocument.approvals.build
+      @position.push(position)
+    end
+    
   end
 
   # POST /ecndocuments
   # POST /ecndocuments.xml
   def create
-    #@ecndocument = Ecndocument.new(params[:ecndocument])
+    @ecndocument = Ecndocument.new(params[:ecndocument])
 
     respond_to do |format|
-      #if @ecndocument.save
-      #  format.html { redirect_to(@ecndocument, :notice => 'Ecndocument was successfully created.') }
-      #  format.xml  { render :xml => @ecndocument, :status => :created, :location => @ecndocument }
-      #else
+      if @ecndocument.save
+        format.html { redirect_to(@ecndocument, :notice => 'Ecndocument was successfully created.') }
+        format.xml  { render :xml => @ecndocument, :status => :created, :location => @ecndocument }
+      else
         format.html { render :action => "new" }
         format.xml  { render :xml => @ecndocument.errors, :status => :unprocessable_entity }
-      #end
+      end
     end
   end
 
@@ -80,12 +101,6 @@ class EcndocumentsController < ApplicationController
       format.html { redirect_to(ecndocuments_url) }
       format.xml  { head :ok }
     end
-  end
-  
-private
-  def init_form
-    # @ecnpositions = Ecnposition.approval_for(@user.pos_id)
-    @ecnpositions = Ecnposition.find([2,3,4,5,6,7,8,9,12])
   end
   
   
