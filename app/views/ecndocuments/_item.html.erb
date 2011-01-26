@@ -1,0 +1,9 @@
+﻿<% ecndocument ||= item %>
+  <tr>
+    <td><%= ecndocument.id %></td>
+    <td><%= ecndocument.title %></td>
+    <td><%= ecndocument.customer_name %></td>
+    <td><%= ecndocument.th_part_no %></td>
+    <td><%= ecndocument.ref_spec %></td>
+    <td><%= link_to "Edit", edit_ecndocument_path(ecndocument) %></td>
+  </tr>

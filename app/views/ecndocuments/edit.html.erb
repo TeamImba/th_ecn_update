@@ -1,1 +1,120 @@
-<%= render 'form' %>
+<%= form_for(@ecndocument, :html => {:multipart => true} ) do |f| %>
+  <table width="100%" border="1" bordercolor="#000000" cellpadding="3">
+	<tr>
+		<td align="center" colspan="6" height="110">
+			<table width="100%">
+				<tr>
+					<td width="50px" align="center" valign="middle"><img src="/images/thlogo.gif"></td>
+					<td align="center">
+							<br/><h1><%= @ecndocument.doc_category.name.upcase %></h1>
+							<h3>TONG HSING ELECTRONICS (PHILS.) INC.</h3>
+							<h4>Carmelray I Industrial Park Canlubang Calamba City</h4>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+  
+  <tr>
+		<td colspan="5" height="40"><b>Title</b> <br/><%= @ecndocument.title %></td>
+		<td><b>ECN #</b> 
+		<%= display_ecn_doc f %>	
+		</td>
+	</tr>
+  
+  
+  <tr>
+		<td height="40"><b>Customer</b><br/>
+      <%= @ecndocument.customer_name %>
+		</td>
+		<td colspan="2"><b>TH. P/N.</b><br/>
+			<%= @ecndocument.th_part_no %>
+		</td>
+		<td colspan="2"><b>Ref. Specs.</b><br/><%= @ecndocument.ref_spec %></td>
+		<td><b>Extension </b><br/>
+      <%= display_extension "1st", 1 %>
+      <%= display_extension "2nd", 2 %>
+      <%= display_extension "None", 0 %>      
+    </td>						
+	</tr>
+  
+  
+  <tr>
+    <td align="center" colspan="6"><b>DESCRIPTION OF CHANGE</b></td>
+  </tr>
+  <tr>
+    <td colspan="3" height="250" width="50%"><b>From</b> <br/><%= display_text @ecndocument.description_to  %></td>
+    <td colspan="3" width="50%"><b>To</b> <br/><%= display_text @ecndocument.description_from %></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="6"><b>REASON FOR CHANGE</b></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="6"><br/><%= display_text @ecndocument.reason  %></td>
+  </tr>	
+  
+  
+  <tr>
+    <td colspan="2" height="50">
+      <b>Level & Type of Revision</b> <br/>
+      <%= @ecndocument.revision1 %> | <%= @ecndocument.revision2 %> 
+    </td>
+    <td colspan="2">
+      <b>Actions Required</b> <br/>
+      <%= @ecndocument.action %>
+    </td>
+    <td colspan="2"><b>Effectivity</b><br/>
+      <%= display_effectivity_date f %>
+    </td>				
+  </tr>
+  
+  
+  <tr>
+    <td colspan="2"><b>Approvals</b></td>
+    <td><b>Name</b></td>
+    <td><b>Signature</b></td>
+    <td><b>Date</b></td>
+    <td><b>Time</b></td>				
+  </tr>
+  
+  <% for reviewer in @ecndocument.approvals  %>
+      <tr>
+      <td colspan="2"><%= reviewer.ecnposition.position_name %></td>
+      
+      <%= review_status reviewer, @ecndocument.user_designation %>		
+    </tr>
+  <% end %>
+  
+  
+  <tr>
+		<td align="center" colspan="6" height="60"><br><h1><%= @ecndocument.doc_category.alias%> Review Form</h1></td>
+	</tr>
+	<tr>
+		<td width="15%">Department</td>
+		<td>Action, Items, Concerns, Comments, Disposition</td>		
+		<td>Remarks</td>
+		<td>Noted By</td>
+		<td>Date/Time</td>
+		<td>Signature</td>		
+	</tr>
+  <% count = 0 %>
+  <% f.fields_for :ecnreview_forms do |reviewer| %>
+  <tr>
+    <td><b> <%= @ecndocument.doc_category.ecnpositions[count].position_name %> </b></td>
+    <%= review_remark @ecndocument.id, @ecndocument.approvals[count], @ecndocument.user_designation, reviewer %>			
+  </tr>
+  <% count += 1 %>
+  <% end %>
+  
+  
+  <tr><td colspan="6">
+  <ol style="list-style-type:none;">	
+	<br><b>Attach Files:</b></br>
+      <%= display_assets %>
+  </ol>
+  </td></tr>
+  
+  
+  <tr><td colspan="6"><%= submit_tag "Update" %></td></tr>
+  </table>
+<% end %>

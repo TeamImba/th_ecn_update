@@ -6,7 +6,10 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title><%= "TONGHSING Electronics Philippines Inc." if @pagetitle.nil? || @pagetitle.blank? %><%= @pagetitle%></title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag "jquery-1.4.4.min", "rails.1.4.4", "application" %>
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <%= javascript_include_tag "jquery-1.4.4.min", "rails.1.4.4", "application", "jquery.autocomplete" %>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
   <%= csrf_meta_tag %>
   <style type="text/css">
     .red { 
@@ -32,12 +35,14 @@
     .table_head { background-color:#0099CC; color:#FFFFFF; }
     .banner { font-size: 20px; color:#003399; font-weight:bold;}	
     .tdhead { font-size: 12px; }
-  
-  
   </style>
 </head>
 <body>
+<% if @admin %>
+<%=render :partial => "layouts/navi_admin" %>
+<% else %>
 <%=render :partial => "layouts/navi" %>
+<% end %>
 
 <%= yield  %>
 

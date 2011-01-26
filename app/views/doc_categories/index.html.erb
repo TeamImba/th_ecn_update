@@ -15,7 +15,7 @@
     <td><%= doc_category.alias %></td>
     <td><%= link_to "Show", doc_category %></td>
     <td><%= link_to "Edit", edit_doc_category_path(doc_category) %></td>
-    <td><%= link_to "Delete", doc_category, :confirm => "Are you sure?", :method => :delete %></td>
+    <td><%= link_to "Delete", doc_category, :confirm => "Are you sure?", :method => :delete, :class => "red"  %></td>
   </tr>
 <% end %>
 </table>

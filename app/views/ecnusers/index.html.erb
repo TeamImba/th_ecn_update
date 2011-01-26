@@ -21,7 +21,7 @@
     <td><%=ecnuser.email %>&nbsp;</td>
     <td><%= link_to "Show", ecnuser %></td>
     <td><%= link_to "Edit", edit_ecnuser_path(ecnuser) %></td>	
-    <td><%= link_to "Delete", ecnuser, :confirm => "Are you sure?", :method => :delete %></td>
+    <td><%= link_to "Delete", ecnuser, :confirm => "Are you sure?", :method => :delete, :class => "red"  %></td>
   </tr>
 <% end %>
 </table>

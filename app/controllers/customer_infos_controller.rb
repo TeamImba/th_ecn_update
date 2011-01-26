@@ -1,17 +1,30 @@
 class CustomerInfosController < ApplicationController
 
-  before_filter :authenticate_admin, :except => :get_th_pn
+  before_filter :authenticate_admin, :except => [:get_th_pn, :get_suggestions]
   
   def get_th_pn
     @thpn = CustomerInfo.where( :cust_id => params[:id].to_s )
     render :partial => "get_th_pn"
   end
   
+  def get_suggestions
+    if !params[:q].blank?
+      q =  "%" + params[:q].to_s + "%"
+      @cust_ids = CustomerInfo.select("cust_id").where( ["cust_id like ?", q] ).group("cust_id").map{|v| v.cust_id}
+    else
+      @cust_ids = nil
+    end
+    @cust_ids = @cust_ids.join("\r\n")
+    respond_to do |format|
+      format.js { render :text => @cust_ids }
+    end
+  end
+  
   # GET /customer_infos
   # GET /customer_infos.xml
   def index
     @customer_infos = CustomerInfo.paginate :page => params[:page], :order => "cust_id asc", :per_page => 10
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @customer_infos }

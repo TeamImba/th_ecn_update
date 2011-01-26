@@ -1,57 +1,22 @@
-<h1>Listing ecndocuments</h1>
+<div id="tabs" style="width:75%">
+    <ul>
+        <li><a href="#tab-1"><span>Queued Documents</span></a></li>
+        <li><a href="#tab-2"><span>Approved Documents</span></a></li>
+        <li><a href="#tab-3"><span>Disapproved Documents</span></a></li>
+    </ul>
+    <div id="tab-1">
+      <%=render :partial => "list", :locals => { :list => @queued } %>
+    </div>
+    <div id="tab-2">
+      <%=render :partial => "list", :locals => { :list => @approved } %>
+    </div>
+    <div id="tab-3">
+      <%=render :partial => "list", :locals => { :list => @disapproved } %>
+    </div>
+</div>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Customer name</th>
-    <th>Th part no</th>
-    <th>Ref spec</th>
-    <th>Extension</th>
-    <th>Description to</th>
-    <th>Description from</th>
-    <th>Reason</th>
-    <th>Revision1</th>
-    <th>Action</th>
-    <th>Effectivity from</th>
-    <th>Effectivity to</th>
-    <th>User</th>
-    <th>Ecn doc</th>
-    <th>Revision2</th>
-    <th>User designation</th>
-    <th>Closed timestamp</th>
-    <th>Obsoletion</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @ecndocuments.each do |ecndocument| %>
-  <tr>
-    <td><%= ecndocument.title %></td>
-    <td><%= ecndocument.customer_name %></td>
-    <td><%= ecndocument.th_part_no %></td>
-    <td><%= ecndocument.ref_spec %></td>
-    <td><%= ecndocument.extension %></td>
-    <td><%= ecndocument.description_to %></td>
-    <td><%= ecndocument.description_from %></td>
-    <td><%= ecndocument.reason %></td>
-    <td><%= ecndocument.revision1 %></td>
-    <td><%= ecndocument.action %></td>
-    <td><%= ecndocument.effectivity_from %></td>
-    <td><%= ecndocument.effectivity_to %></td>
-    <td><%= ecndocument.user_id %></td>
-    <td><%= ecndocument.ecn_doc %></td>
-    <td><%= ecndocument.revision2 %></td>
-    <td><%= ecndocument.user_designation %></td>
-    <td><%= ecndocument.closed_timestamp %></td>
-    <td><%= ecndocument.obsoletion %></td>
-    <td><%= link_to 'Show', ecndocument %></td>
-    <td><%= link_to 'Edit', edit_ecndocument_path(ecndocument) %></td>
-    <td><%= link_to 'Delete', ecndocument, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Ecndocument', new_ecndocument_path %>
+<script>
+  $(document).ready(function() {
+    $("#tabs").tabs();
+  });
+</script>

@@ -4,7 +4,7 @@ class LoginController < ApplicationController
     if request.post?
       message, @user = Ecnuser.authenticate(params[:login][:username], params[:login][:password])
       if message == "successful"
-        session[:user] = @user
+        session[:user] = @user.id
         redirect_to ecndocuments_path
       else
         flash[:error] = message

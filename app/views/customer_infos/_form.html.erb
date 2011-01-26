@@ -23,3 +23,9 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+$(document).ready( function(){
+  $("#customer_info_cust_id").autocomplete("/customer_infos/<%=@admin.id%>/get_suggestions");
+});
+</script>

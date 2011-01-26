@@ -2,7 +2,11 @@ class EcndocumentsController < ApplicationController
   # GET /ecndocuments
   # GET /ecndocuments.xml
   def index
-    @ecndocuments = Ecndocument.all
+    # @ecndocuments = Ecndocument.all
+    @queued = Ecndocument.queued @user
+    @approved = Ecndocument.approved @user
+    @disapproved = Ecndocument.disapproved @user
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @ecndocuments }
@@ -34,7 +38,7 @@ class EcndocumentsController < ApplicationController
       @ecndocument.ecnreview_forms.build
       @position.push(position)
     end
-    5.times { @ecndocument.assets.build }
+    @ecndocument.assets.build
     
     if @doc_category
       respond_to do |format|
@@ -49,14 +53,6 @@ class EcndocumentsController < ApplicationController
   # GET /ecndocuments/1/edit
   def edit
     @ecndocument = Ecndocument.find(params[:id])
-    @doc_category = @ecndocument.doc_category
-    @user_id = @ecndocument.user_id
-    @position = []
-    for position in @doc_category.ecnpositions
-      @ecndocument.approvals.build
-      @position.push(position)
-    end
-    
   end
 
   # POST /ecndocuments

@@ -1,6 +1,7 @@
 class Ecnuser < ActiveRecord::Base
   require 'digest/md5'
   has_many :approvals
+  has_many :ecnreview_forms, :primary_key => :id, :foreign_key => :user_id
   belongs_to :ecnposition, :primary_key => :id, :foreign_key => :pos_id
   
   before_save :hash_password

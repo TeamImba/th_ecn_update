@@ -15,7 +15,7 @@
     <td><%= customer_info.th_pn %></td>
     <td><%= link_to "Show", customer_info %></td>
     <td><%= link_to "Edit", edit_customer_info_path(customer_info) %></td>
-    <td><%= link_to "Delete", customer_info, :confirm => "Are you sure?", :method => :delete %></td>
+    <td><%= link_to "Delete", customer_info, :confirm => "Are you sure?", :method => :delete, :class => "red" %></td>
   </tr>
 <% end %>
 </table>

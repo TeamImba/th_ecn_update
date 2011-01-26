@@ -5,36 +5,34 @@
 </div>
 <div style="float:right;right:1;align:right;width:100%">
 	<div style="width:20%;float:left"><br>
-	Welcome, <b><%=@user.first_name%></b>
+	Welcome, <b><%=@admin.first_name%></b>
 	</div>
-	<div style="float:right;right:1;align:right;">  
+	<div style="float:right;right:1;align:right;">
   <div id="menu">
     <div>
-      <%=link_to image_tag("/images/home.jpg"), root_path %> <br/>
+      <%=link_to image_tag("/images/home.jpg"), admin_path %> <br/>
       Home
     </div>
     <div>
-      <%=link_to image_tag("/images/user_icon.jpg"), edit_profile_ecnuser_path(@user.id) %> <br/>
-      Profile
+      <%=link_to image_tag("/images/user_icon.jpg"), ecnusers_path %> <br/>
+      User Admin
     </div>
     <%= report_menu %>
-    <% if @user && @user.pos_id != 9 %>
     <div>
-      <a href="/ecndocuments/search"><img src="/images/find.jpg" width="45px"></a> <br/>
-      Find ECN Doc
+      <%=link_to image_tag("/images/add.png"), customer_infos_path %> <br/>
+      Customer ID/TH PN
     </div>
-    <% end %>
     <div>
-      <a href="http://apps.tonghsing.ph/ecn/"><img src="/images/chart.jpg" width="45px"></a> <br/>
-      Status Report
-    </div>
-    <div style="float:left">
-      <a href="/logout"><img src="/images/off.jpg" width="45px"></a> <br/>
+      <%=link_to image_tag("/images/off.jpg"), admin_logout_path %> <br/>
       Logout
     </div>
   </div>
 	</div>
 </div>
 <div style="clear:both;"></div>
-<hr/>
+<div style="width:100%; background-color:darkgray;">
+<div style="margin:20px;">
+<%= link_to "Home", admin_path, :style => "color:white" %>
+</div>
+</div>
 <div style="clear:both;"></div>

@@ -11,6 +11,7 @@ Laguna::Application.routes.draw do
   resources :customer_infos do
     member do
       get 'get_th_pn'
+      get 'get_suggestions'
     end
   end
 

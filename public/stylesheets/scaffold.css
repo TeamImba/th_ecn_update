@@ -72,3 +72,27 @@ div.progressBar div.background {
   width: 0%;
 }
 
+div#menu{
+  height:90px;
+}
+
+div#menu div{
+	float:left;
+	height:70px;
+	width: 70px;
+	margin:3px 3px 3px 3px;
+	vertical-align:bottom;
+}
+
+div#menu div a:hover{
+	text-decoration:none;
+}
+
+div#menu div a img{
+	height:50px;
+}
+
+div#menu div a img:hover{
+	text-decoration:none;
+}
+
