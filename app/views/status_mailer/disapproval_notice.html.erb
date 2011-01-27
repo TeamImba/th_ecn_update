@@ -1,0 +1,13 @@
+<body>
+<font family="Arial"><p>Hi <%=@originator.username%>! 
+<br>
+Someone has disapproved your approved <%=@document.doc_category.alias%> document.<br>
+<hr>
+<p><%=@disapproved_by.first_name%> <%=@disapproved_by.last_name%>, a <%=@disapproved_by.ecnposition.position_name%> disapproved <%=@document.doc_category.alias%> Document number <%=@document.id%></p>
+<hr>
+<p><font size="4" color="BLUE"> Reason:</font></p>
+<p><font size="3" color="Red"> <%=@remarks %></font></p>
+<hr>
+<p>Please login <a href="http://ecn.tonghsing.ph:3000/ecndocuments/show?id=<%=@document.id%>&username=<%=@originator.username %>">here</a> to your view the entire <%=@document.doc_category.alias%> document action</p>
+<hr>
+</body>

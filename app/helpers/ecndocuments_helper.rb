@@ -2,7 +2,7 @@ module EcndocumentsHelper
 
   def display_ecn_doc f
     output = ""
-    if @user.ecnposition.id == DCC_ACCESS
+    if @last_signatory
       output += "<br/>"
       output += f.text_field :ecn_doc
 		elsif @ecndocument.ecn_doc.blank?
@@ -26,8 +26,8 @@ module EcndocumentsHelper
 
   def display_effectivity_date(f)
     output = ""
-    if @user.ecnposition == DCC_ACCESS
-      if @ecndocument.ecn_doc.blank?
+    if @last_signatory
+      if @ecndocument.effectivity_from.blank? && @ecndocument.effectivity_to.blank?
         output += "Effectivity from: "
         output += f.date_select(:effectivity_from)
         output += "<hr>" 
@@ -142,8 +142,14 @@ module EcndocumentsHelper
         output += user_done.first.review
         output += "</td>"
         output += "<td>N/A</td>"
-        output += "<td>N/A</td>"
-        output += "<td>N/A</td>"
+        output += "<td>"+reviewer.approval_timestamp.strftime("%m/%d/%y %H:%M")+"</td>"
+        output += "<td>"
+        if user && user.signature.url.index("/missing.png")
+          output += "N/A"
+        else
+          output += (image_tag(user.signature.url))
+        end
+        output += "</td>"
       else
         output += "<td>--</td>"
         output += "<td>--</td>"

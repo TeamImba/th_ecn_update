@@ -1,4 +1,5 @@
-class EcndocumentsController < ApplicationController
+class EcndocumentsController < ApplicationController 
+
   # GET /ecndocuments
   # GET /ecndocuments.xml
   def index
@@ -39,7 +40,7 @@ class EcndocumentsController < ApplicationController
       @position.push(position)
     end
     @ecndocument.assets.build
-    
+    @last_signatory = false
     if @doc_category
       respond_to do |format|
         format.html # new.html.erb
@@ -52,7 +53,8 @@ class EcndocumentsController < ApplicationController
 
   # GET /ecndocuments/1/edit
   def edit
-    @ecndocument = Ecndocument.find(params[:id])
+    @ecndocument = Ecndocument.find(params[:id])    
+    @last_signatory = (@ecndocument.next_approval(@user.id).blank?)? true : false
   end
 
   # POST /ecndocuments
@@ -62,6 +64,7 @@ class EcndocumentsController < ApplicationController
 
     respond_to do |format|
       if @ecndocument.save
+        StatusMailer.next_signatory_notice(@ecndocument.next_approval.ecnuser, @user, @ecndocument).deliver
         format.html { redirect_to(@ecndocument, :notice => 'Ecndocument was successfully created.') }
         format.xml  { render :xml => @ecndocument, :status => :created, :location => @ecndocument }
       else
@@ -75,9 +78,22 @@ class EcndocumentsController < ApplicationController
   # PUT /ecndocuments/1.xml
   def update
     @ecndocument = Ecndocument.find(params[:id])
-
+    button_used = params[:commit]
+    approval = @ecndocument.approvals.where(["user_id = ?", @user.id]).first
+    if button_used == "Approve"
+      approval.update_attribute(:status, 1)
+    else
+      approval.update_attribute(:status, 0)
+    end
     respond_to do |format|
       if @ecndocument.update_attributes(params[:ecndocument])
+        if button_used == "Approve"
+          StatusMailer.next_signatory_notice(@ecndocument.next_approval.ecnuser, @user, @ecndocument).deliver
+        else
+          @originator = @ecndocument.approvals.order("pos_id asc").first
+          @remark = @ecndocument.approvals.where(["user_id = ?", @user.id]).first.remark
+          StatusMailer.disapproval_notice(@user, @originator, @ecndocument, @remark ).deliver
+        end
         format.html { redirect_to(@ecndocument, :notice => 'Ecndocument was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -98,6 +114,6 @@ class EcndocumentsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   
 end

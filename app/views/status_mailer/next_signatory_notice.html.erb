@@ -1,0 +1,10 @@
+<body style='font-family:Arial;'>
+<p>Hi <%=@next_signatory.username%>! 
+<br>
+<font color='blue;'>Please check your Tong Hsing <%=@document.doc_category.alias %> account. You have a pending signature session!<font><br>
+<hr>
+Previous signatory: <%=@prev_signatory.last_name %>, <%=@prev_signatory.first_name %> &lt; <%=@prev_signatory.email %> &gt;<br>
+Document #: <%=@document.id%>
+<hr>
+<p>Click <a href="http://ecn.tonghsing.ph:3000/ecndocuments/show?id=<%=@document.id%>&username=<%=@next_signatory.username %>">here</a> to view/approve your document or copy-paste the link below on your browser.<br>http://ecn.tonghsing.ph:3000/ecndocuments/show?id=<%=@document.id%>&username=<%=@next_signatory.username %></p>
+</body>

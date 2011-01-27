@@ -11,7 +11,7 @@
 							<h4>Carmelray I Industrial Park Canlubang Calamba City</h4>
               <%=f.hidden_field :doc_category_id, :value => @doc_category.id %>
               <%=f.hidden_field :user_id, :value => @user_id %>
-              <%=f.hidden_field :ecn_doc, :value => @doc_category.alias %>
+              <%=f.hidden_field :user_designation, :value => @position[1].id %>
 					</td>
 				</tr>
 			</table>
@@ -21,11 +21,7 @@
   <tr>
 		<td colspan="5" height="40"><b>Title</b> <br/><%= text_field "ecndocument", "title"  %></td>
 		<td><b>ECN #</b> 
-		<% if @user.pos_id == DCC_ACCESS %>		
-			<br/><%= f.text_field :ecn_doc %>
-		<% else %>
-			<br/>Note: For DCC entry only
-		<% end %>			
+		<%= display_ecn_doc f %>		
 		</td>
 	</tr>
   
@@ -83,11 +79,7 @@
       <%= f.select "action", options_for_select([["Operator - Inspector Training", "Operator / Inspector Training"], ["Technical Training", "Technical Training"]], @ecndocument.action )  %>
     </td>
     <td colspan="2"><b>Effectivity</b><br/>
-      <% if @user.pos_id == DCC_ACCESS %>
-      <%= date_select "ecndocument", "effectivity_from"  %><br/><%= date_select "ecndocument", "effectivity_to"  %>
-      <% else %>
-      <br/>Note: For DCC entry only
-      <% end %>
+      <%= display_effectivity_date f %>
     </td>				
   </tr>
   
@@ -109,7 +101,7 @@
         <%=g.hidden_field :user_id, :value => @user.id %>
         <%=g.hidden_field :status, :value => "1" %>
       <% else %>
-        <%=g.select :user_id, (raw "<option value="">Select signatory</option>") + options_from_collection_for_select(@position[count].ecnusers, "id", "full_name"), :style => "width:100%" %> 
+        <%=g.select :user_id, (raw "<option value="">Select signatory</option>") + options_from_collection_for_select(@position[count].ecnusers, "id", "full_name"), {}, :style => "width:100%", :class => "signatory", :title => count %> 
       <% end %>
       <%=g.hidden_field :pos_id, :value => @position[count].id %>
       </td>
@@ -139,10 +131,10 @@
   <tr>
     <td><b><%=@position[count].position_name%></b></td>
     <td>
-      <%=g.hidden_field :user_id, :value => @user.id %>
+      <%=g.hidden_field :user_id %>
+      <%=g.hidden_field "rem" %>
+      <%=g.hidden_field :review %>
       <%=g.hidden_field :pos_id, :value => @position[count].id %>
-      <%=g.hidden_field "rem", :value => "N/A" %>
-      <%=g.hidden_field "review", :value => "N/A" %>
     </td>
     <td><b></b></td>
     <td></td>
@@ -171,6 +163,18 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
+  
+    $("#ecndocument_ecnreview_forms_attributes_0_user_id").val(<%=@user.id%>);
+    $("#ecndocument_ecnreview_forms_attributes_0_rem").val("N/A");
+    $("#ecndocument_ecnreview_forms_attributes_0_review").val("N/A");
+   
+    
+    $(".signatory").live("change", function(){
+      var id = $(this).attr("id");
+      id = $("#" + id + " option:selected").val();
+      var position = $(this).attr("title");
+      $("#ecndocument_ecnreview_forms_attributes_"+position+"_user_id").val(id);
+    });
 
     $("input[type=file]").live("change", function(){      
       $("#files-root").append('<li><input id="ecndocument_assets_attributes_x_image" name="ecndocument[assets_attributes][x][image]" type="file" /></li>');

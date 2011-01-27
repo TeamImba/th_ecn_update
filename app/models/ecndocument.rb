@@ -15,20 +15,30 @@ class Ecndocument < ActiveRecord::Base
   before_save :set_user_designation
   
   def set_user_designation
-    if next_approval
-      self.user_designation = next_approval.id
+    if self.next_approval
+      x = approvals.where("status is not null and approval_timestamp is not null and user_id is not null").order("pos_id asc").last
+      if x && x.status.to_i == 0
+        self.user_designation = nil
+      else
+        self.user_designation = next_approval.pos_id
+      end
     else
-      approved_or_not = approvals.where("status is not null and user_id is not null").order("pos_id asc").last
+      approved_or_not = approvals.where("status is not null and approval_timestamp is not null").order("pos_id asc").last
       if approved_or_not && approved_or_not.status.to_i == 1
         self.user_designation = 0
-      else
+      elsif approved_or_not && approved_or_not.status.to_i == 0
         self.user_designation = nil
       end
+      self.closed_timestamp = Time.now
     end
   end
 
-  def self.next_approval
-    approvals.where("status is null and user_id is null").order("pos_id asc").first
+  def next_approval(user_id = "")
+    if user_id.blank?
+      approvals.where("status is null and approval_timestamp is null and user_id is not null").order("pos_id asc").first
+    else
+      approvals.where(["status is null and approval_timestamp is null and user_id is not null and user_id <> ?", user_id]).order("pos_id asc").first
+    end
   end
   
   def self.queued(user)
@@ -36,7 +46,7 @@ class Ecndocument < ActiveRecord::Base
   end
   
   def self.approved(user)
-    where( ["user_designation = 1 and id in (select ecn_id from approvals where user_id = ?)", user.id] )
+    where( ["user_designation = 0 and id in (select ecn_id from approvals where user_id = ?)", user.id] )
   end
   
   def self.disapproved(user)
