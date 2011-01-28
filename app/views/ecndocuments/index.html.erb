@@ -5,9 +5,11 @@
         <li><a href="#tab-3"><span>Disapproved Documents</span></a></li>
     </ul>
     <div id="tab-1">
+      <% @status = true %>
       <%=render :partial => "list", :locals => { :list => @queued } %>
     </div>
     <div id="tab-2">
+      <% @status = false %>
       <%=render :partial => "list", :locals => { :list => @approved } %>
     </div>
     <div id="tab-3">

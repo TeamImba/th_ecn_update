@@ -115,5 +115,9 @@ class EcndocumentsController < ApplicationController
     end
   end
 
+  def print
+    @ecndocument = Ecndocument.find(params[:id])
+    render :action => :show, :layout => false
+  end
   
 end

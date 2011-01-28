@@ -1,95 +1,117 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Title:</b>
-  <%= @ecndocument.title %>
-</p>
-
-<p>
-  <b>Customer name:</b>
-  <%= @ecndocument.customer_name %>
-</p>
-
-<p>
-  <b>Th part no:</b>
-  <%= @ecndocument.th_part_no %>
-</p>
-
-<p>
-  <b>Ref spec:</b>
-  <%= @ecndocument.ref_spec %>
-</p>
-
-<p>
-  <b>Extension:</b>
-  <%= @ecndocument.extension %>
-</p>
-
-<p>
-  <b>Description to:</b>
-  <%= @ecndocument.description_to %>
-</p>
-
-<p>
-  <b>Description from:</b>
-  <%= @ecndocument.description_from %>
-</p>
-
-<p>
-  <b>Reason:</b>
-  <%= @ecndocument.reason %>
-</p>
-
-<p>
-  <b>Revision1:</b>
-  <%= @ecndocument.revision1 %>
-</p>
-
-<p>
-  <b>Action:</b>
-  <%= @ecndocument.action %>
-</p>
-
-<p>
-  <b>Effectivity from:</b>
-  <%= @ecndocument.effectivity_from %>
-</p>
-
-<p>
-  <b>Effectivity to:</b>
-  <%= @ecndocument.effectivity_to %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @ecndocument.user_id %>
-</p>
-
-<p>
-  <b>Ecn doc:</b>
-  <%= @ecndocument.ecn_doc %>
-</p>
-
-<p>
-  <b>Revision2:</b>
-  <%= @ecndocument.revision2 %>
-</p>
-
-<p>
-  <b>User designation:</b>
-  <%= @ecndocument.user_designation %>
-</p>
-
-<p>
-  <b>Closed timestamps:</b>
-  <%= @ecndocument.closed_timestamp %>
-</p>
-
-<p>
-  <b>Obsoletion:</b>
-  <%= @ecndocument.obsoletion %>
-</p>
-
-
-<%= link_to 'Edit', edit_ecndocument_path(@ecndocument) %> |
-<%= link_to 'Back', ecndocuments_path %>
+  <table width="100%" border="1" bordercolor="#000000" cellpadding="3">
+	<tr>
+		<td align="center" colspan="6" height="110">
+			<table width="100%">
+				<tr>
+					<td width="50px" align="center" valign="middle"><img src="/images/thlogo.gif"></td>
+					<td align="center">
+							<br/><h1><%= @ecndocument.doc_category.name.upcase %></h1>
+							<h3>TONG HSING ELECTRONICS (PHILS.) INC.</h3>
+							<h4>Carmelray I Industrial Park Canlubang Calamba City</h4>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+  
+  <tr>
+		<td colspan="5" height="40"><b>Title</b> <br/><%= @ecndocument.title %></td>
+		<td><b>ECN #</b> 
+		<%= @ecndocument.ecn_doc %>	
+		</td>
+	</tr>
+  
+  
+  <tr>
+		<td height="40"><b>Customer</b><br/>
+      <%= @ecndocument.customer_name %>
+		</td>
+		<td colspan="2"><b>TH. P/N.</b><br/>
+			<%= @ecndocument.th_part_no %>
+		</td>
+		<td colspan="2"><b>Ref. Specs.</b><br/><%= @ecndocument.ref_spec %></td>
+		<td><b>Extension </b><br/>
+      <%= display_extension "1st", 1 %>
+      <%= display_extension "2nd", 2 %>
+      <%= display_extension "None", 0 %>      
+    </td>						
+	</tr>
+  
+  
+  <tr>
+    <td align="center" colspan="6"><b>DESCRIPTION OF CHANGE</b></td>
+  </tr>
+  <tr>
+    <td colspan="3" height="250" width="50%"><b>From</b> <br/><%= display_text @ecndocument.description_to  %></td>
+    <td colspan="3" width="50%"><b>To</b> <br/><%= display_text @ecndocument.description_from %></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="6"><b>REASON FOR CHANGE</b></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="6"><br/><%= display_text @ecndocument.reason  %></td>
+  </tr>	
+  
+  
+  <tr>
+    <td colspan="2" height="50">
+      <b>Level & Type of Revision</b> <br/>
+      <%= @ecndocument.revision1 %> | <%= @ecndocument.revision2 %> 
+    </td>
+    <td colspan="2">
+      <b>Actions Required</b> <br/>
+      <%= @ecndocument.action %>
+    </td>
+    <td colspan="2"><b>Effectivity</b><br/>
+      Effectivity from: @ecndocument.effectivity_from
+      <hr/> 
+      Effectivity to: @ecndocument.effectivity_to
+    </td>				
+  </tr>
+  
+  
+  <tr>
+    <td colspan="2"><b>Approvals</b></td>
+    <td><b>Name</b></td>
+    <td><b>Signature</b></td>
+    <td><b>Date</b></td>
+    <td><b>Time</b></td>				
+  </tr>
+  
+  <% for reviewer in @ecndocument.approvals  %>
+      <tr>
+      <td colspan="2"><%= reviewer.ecnposition.position_name %></td>
+      
+      <%= review_status reviewer, @ecndocument.user_designation %>		
+    </tr>
+  <% end %>
+  
+  
+  <tr>
+		<td align="center" colspan="6" height="60"><br><h1><%= @ecndocument.doc_category.alias%> Review Form</h1></td>
+	</tr>
+	<tr>
+		<td width="15%">Department</td>
+		<td>Action, Items, Concerns, Comments, Disposition</td>		
+		<td>Remarks</td>
+		<td>Noted By</td>
+		<td>Date/Time</td>
+		<td>Signature</td>		
+	</tr>
+  <% @ecndocument.ecnreview_forms.each_with_index do |reviewer, count| %>
+  <tr>
+    <td><b> <%= @ecndocument.doc_category.ecnpositions[count].position_name %> </b></td>
+    <%= display_review_remark @ecndocument.id, @ecndocument.approvals[count], @ecndocument.user_designation, reviewer %>			
+  </tr>
+  <% end %>
+  
+  
+  <tr><td colspan="6">
+  <ol style="list-style-type:none;">	
+	<br><b>Attach Files:</b></br>
+      <%= display_assets %>
+  </ol>
+  </td></tr>
+  
+  
+</table>

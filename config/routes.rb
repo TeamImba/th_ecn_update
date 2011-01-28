@@ -4,7 +4,11 @@ Laguna::Application.routes.draw do
 
   resources :ecnreview_forms
 
-  resources :ecndocuments
+  resources :ecndocuments do
+    member do 
+      get 'print'
+    end
+  end
 
   resources :approvals
 

@@ -162,6 +162,45 @@ module EcndocumentsHelper
     raw output
   end
   
+  def display_review_remark(doc_id, reviewer, designation, f )
+    user = reviewer.ecnuser
+    output = ""
+    if user.blank?
+      output += "<td>N/A</td>"
+      output += "<td>N/A</td>"
+      output += "<td>N/A</td>"
+      output += "<td>N/A</td>"
+      output += "<td>N/A</td>"
+    else 
+      user_done = user.ecnreview_forms.where(["ecn_id = ?", doc_id ])
+      if reviewer && reviewer.status && user_done && user_done.first
+        output += "<td>"
+        output += user_done.first.rem
+        output += "</td>"
+        output += "<td>"
+        output += user_done.first.review
+        output += "</td>"
+        output += "<td>N/A</td>"
+        output += "<td>"+reviewer.approval_timestamp.strftime("%m/%d/%y %H:%M")+"</td>"
+        output += "<td>"
+        if user && user.signature.url.index("/missing.png")
+          output += "N/A"
+        else
+          output += (image_tag(user.signature.url))
+        end
+        output += "</td>"
+      else
+        output += "<td>--</td>"
+        output += "<td>--</td>"
+        output += "<td>--</td>"
+        output += "<td>--</td>"
+        output += "<td>--</td>"
+      end
+    end
+    
+    raw output
+  end
+  
   def display_assets
     output = ""
     for asset in @ecndocument.assets

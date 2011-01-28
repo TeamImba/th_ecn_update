@@ -5,5 +5,11 @@
     <td><%= ecndocument.customer_name %></td>
     <td><%= ecndocument.th_part_no %></td>
     <td><%= ecndocument.ref_spec %></td>
-    <td><%= link_to "Edit", edit_ecndocument_path(ecndocument) %></td>
+    <td>
+      <% if @status %>
+      <%= link_to "Edit", edit_ecndocument_path(ecndocument) %>
+      <% else %>
+      <%= link_to "Show", ecndocument_path(ecndocument) %>
+      <% end %>
+    </td>
   </tr>
