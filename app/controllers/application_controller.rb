@@ -11,10 +11,26 @@ private
     
     # admin is logged in
     if session[:admin]
-      @admin = session[:admin]
+      @admin = Ecnuser.where(["id = ? ", session[:admin] ]).first
+      @reports = []
+      reports = @admin.ecnposition.doc_categories
+      reports.each { |report|
+        first_position = report.ecnpositions.order("id asc").limit(1).first
+        if @admin.ecnposition.id <= first_position.id
+          @reports << report
+        end
+      }
     # user is logged in
     elsif session[:user]
-      @user = session[:user]
+      @user = Ecnuser.where(["id = ? ", session[:user] ]).first
+      @reports = []
+      reports = @user.ecnposition.doc_categories
+      reports.each { |report|
+        first_position = report.ecnpositions.order("id asc").limit(1).first
+        if @user.ecnposition.id <= first_position.id
+          @reports << report
+        end
+      }
     # unlogged user is trying to login via /login or /admin_login
     # nothing to worry about because these two controller has only login and logout function
   	elsif params[:controller] != "Login" && params[:controller] != "Admin"
