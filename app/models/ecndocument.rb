@@ -2,7 +2,7 @@ class Ecndocument < ActiveRecord::Base
   has_many :ecnreview_forms, :primary_key => :id, :foreign_key => :ecn_id, :dependent => :destroy
   has_many :approvals, :primary_key => :id, :foreign_key => :ecn_id, :dependent => :destroy
   has_many :assets, :primary_key => :id, :foreign_key => :ecn_id, :dependent => :destroy
-  
+  belongs_to :encposition, :primary_key => :id, :foreign_key => :user_designation
   belongs_to :ecnuser, :primary_key => :id, :foreign_key => :user_id
   belongs_to :doc_category, :primary_key => :id, :foreign_key => :doc_category_id
   
@@ -53,5 +53,12 @@ class Ecndocument < ActiveRecord::Base
     where( ["user_designation is null and id in (select ecn_id from approvals where user_id = ?)", user.id] )
   end
   
+  def self.pending(user)
+    where( ["user_designation is not null and user_designation <> 0 and user_designation <> ? and id in (select ecn_id from approvals where user_id = ?)", user.ecnposition.id, user.id] )
+  end
+  
+  def self.pending_summary(user)
+    select("ecnpositions.position_name, count(*)").joins("left outer join ecnpositions on ecnpositions.id = ecndocuments.user_designation").where( ["user_designation is not null and user_designation <> 0 and user_designation <> ? and ecndocuments.id in (select ecn_id from approvals where user_id = ?)", user.ecnposition.id, user.id] ).group("ecnpositions.position_name").count
+  end
   
 end

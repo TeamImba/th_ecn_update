@@ -7,7 +7,8 @@ class EcndocumentsController < ApplicationController
     @queued = Ecndocument.queued @user
     @approved = Ecndocument.approved @user
     @disapproved = Ecndocument.disapproved @user
-    
+    @pending = Ecndocument.pending @user
+    @pending_summary = Ecndocument.pending_summary @user
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @ecndocuments }
